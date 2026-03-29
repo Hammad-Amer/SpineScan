@@ -28,7 +28,7 @@ import albumentations as A
 from albumentations.pytorch import ToTensorV2
 
 # ── Config ───────────────────────────────────────────────────
-BASE_DIR = Path(__file__).parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 CKPT_PATH = BASE_DIR / "checkpoints" / "mri_classifier.pth"
 
 CLASSES = ["Sagittal T1", "Sagittal T2/STIR", "Axial T2"]

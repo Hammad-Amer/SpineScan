@@ -35,7 +35,7 @@ from pathlib import Path
 warnings.filterwarnings("ignore")
 
 # ── Paths ────────────────────────────────────────────────────
-BASE_DIR = Path(__file__).parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 REPO_DIR = BASE_DIR / "spine_model"
 sys.path.insert(0, str(REPO_DIR))
 

@@ -86,35 +86,27 @@ The ensemble gracefully degrades — if only a subset of models are trained, onl
 ```
 SpineSCAN/
 │
-├── app.py                          # Streamlit web interface
-├── inference_single.py             # Multi-model ensemble inference engine
-├── gradcam_viz.py                  # Grad-CAM heatmap generation
-├── mri_classifier.py               # MRI sequence type classifier
-├── train_mri_classifier.py         # MRI classifier training script
-├── find_noisy_label_local.py       # Noisy label detection pipeline
-├── setup_check.py                  # Environment validation
-├── patch_for_rtx4060.py            # GPU adaptation patches
+├── src/                            # Core source code
+│   ├── inference.py                # Multi-model ensemble inference engine
+│   ├── gradcam.py                  # Grad-CAM heatmap generation
+│   ├── mri_classifier.py           # MRI sequence type classifier
+│   ├── train_mri_classifier.py     # MRI classifier training script
+│   ├── noise_detection.py          # Noisy label detection pipeline
+│   ├── gpu_patch.py                # GPU adaptation patches
+│   └── setup_check.py             # Environment validation
 │
-├── run_pipeline.bat                # Main training pipeline (10 steps)
-├── run_extra_training.bat          # Additional crop-variant training (9 models)
-├── run_noise_reduction.bat         # Clean-label retraining (10 models)
-│
-├── checkpoints/                    # Saved model weights
-├── data/                           # Data directory
-│   ├── raw/                        # Raw DICOM imports
-│   ├── preprocessed/               # Processed PNG images
-│   └── external/                   # External datasets
-├── outputs/                        # Analysis results & exports
+├── scripts/                        # Training pipeline automation
+│   ├── run_pipeline.bat            # Main training pipeline (10 steps)
+│   ├── run_extra_training.bat      # Additional crop-variant training (9 models)
+│   └── run_noise_reduction.bat     # Clean-label retraining (10 models)
 │
 ├── website/                        # Web application (React + Node.js)
 │   ├── frontend/                   # React UI
 │   └── backend/                    # Node.js API server
 │
-├── spine_model/                    # Base model repo (cloned, gitignored)
-│
+├── app.py                          # Streamlit web interface (entry point)
 ├── requirements.txt
-├── README.md
-└── CLAUDE.md
+└── README.md
 ```
 
 ---
@@ -131,8 +123,8 @@ SpineSCAN/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/<your-username>/SpineSCAN.git
-cd SpineSCAN
+git clone https://github.com/Hammad-Amer/SpineScan.git
+cd SpineScan
 ```
 
 ### 2. Create the conda environment
@@ -146,19 +138,19 @@ pip install -r requirements.txt
 ### 3. Clone the base model repository
 
 ```bash
-git clone https://github.com/yujiariyasu/spine_model.git spine_model
+git clone https://github.com/yujiariyasu/rsna_2024_lumbar_spine_degenerative_classification.git spine_model
 ```
 
 ### 4. Apply GPU optimisation patches
 
 ```bash
-python patch_for_rtx4060.py
+python src/gpu_patch.py
 ```
 
 ### 5. Verify setup
 
 ```bash
-python setup_check.py
+python src/setup_check.py
 ```
 
 ### 6. Prepare data
@@ -179,7 +171,7 @@ Trains preprocessing models (slice estimation, YOLO object detection) and the 5 
 
 ```bash
 conda activate rsna
-run_pipeline.bat
+scripts\run_pipeline.bat
 ```
 
 ### Stage 2: Crop-Variant Expansion (~12–15h)
@@ -187,7 +179,7 @@ run_pipeline.bat
 Trains 9 additional classification models with different crop ratios to improve ensemble diversity.
 
 ```bash
-run_extra_training.bat
+scripts\run_extra_training.bat
 ```
 
 ### Stage 3: Noise Reduction (~10–15h)
@@ -195,8 +187,8 @@ run_extra_training.bat
 Detects mislabelled training samples using ensemble disagreement, then retrains all models on the cleaned dataset.
 
 ```bash
-python find_noisy_label_local.py
-run_noise_reduction.bat
+python src/noise_detection.py
+scripts\run_noise_reduction.bat
 ```
 
 ---

@@ -19,7 +19,7 @@ import sys
 import re
 from pathlib import Path
 
-BASE_DIR  = Path(__file__).parent
+BASE_DIR  = Path(__file__).resolve().parent.parent
 REPO_DIR  = BASE_DIR / "spine_model"
 SENTINEL  = REPO_DIR / ".rtx4060_patch_applied"
 
@@ -32,7 +32,7 @@ if not REPO_DIR.exists():
     print(f"{FAIL} Repo not found at {REPO_DIR}")
     print("       Clone it first:")
     print(f"       cd {BASE_DIR}")
-    print("       git clone https://github.com/yujiariyasu/spine_model.git")
+    print("       git clone https://github.com/yujiariyasu/rsna_2024_lumbar_spine_degenerative_classification.git spine_model")
     sys.exit(1)
 
 if SENTINEL.exists():

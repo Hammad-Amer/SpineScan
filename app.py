@@ -267,7 +267,7 @@ with tabs[0]:
 
             # ── MRI Type Detection ────────────────────────────
             try:
-                from mri_classifier import classify_mri
+                from src.mri_classifier import classify_mri
 
                 st.markdown('<div class="section-title">MRI Type Detection</div>',
                             unsafe_allow_html=True)
@@ -324,7 +324,7 @@ with tabs[0]:
             if run_clicked:
                 with st.spinner("Running inference (~30s)..."):
                     try:
-                        from inference_single import predict_study, format_predictions
+                        from src.inference import predict_study, format_predictions
                         predictions = predict_study(selected_study, fold=fold, device=device)
                         results = format_predictions(predictions, selected_study)
                         st.session_state["results"] = results
@@ -332,7 +332,7 @@ with tabs[0]:
 
                         # Generate annotated spine report
                         try:
-                            from gradcam_viz import generate_spine_report
+                            from src.gradcam import generate_spine_report
                             report = generate_spine_report(selected_study, results)
                             st.session_state["spine_report"] = report  # may be None
                         except Exception:
@@ -485,7 +485,7 @@ with tabs[2]:
         if st.button("Generate Grad-CAM", type="primary"):
             with st.spinner(f"Computing {gcam_view} Grad-CAM..."):
                 try:
-                    from gradcam_viz import run_gradcam_for_study
+                    from src.gradcam import run_gradcam_for_study
                     result = run_gradcam_for_study(
                         study_id=study_id,
                         condition=gcam_cond_key,

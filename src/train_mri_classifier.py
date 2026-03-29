@@ -28,7 +28,7 @@ from albumentations.pytorch import ToTensorV2
 from sklearn.model_selection import train_test_split
 
 # ── Config ───────────────────────────────────────────────────
-BASE_DIR = Path(__file__).parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 REPO_DIR = BASE_DIR / "spine_model"
 CKPT_DIR = BASE_DIR / "checkpoints"
 

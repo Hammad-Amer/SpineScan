@@ -5,7 +5,7 @@ REM ================================================================
 REM Trains 9 additional classification models to enable full ensemble.
 REM Each model gets train + predict (predict generates OOF CSV for noise detection).
 REM
-REM Run from: SpineSCAN_FYP directory
+REM Run from: SpineSCAN_FYP\scripts directory
 REM Prereqs:  conda activate rsna
 REM           Base 5 models already trained
 REM           All preprocessing (YOLO boxes, sagittal CSVs) already done
@@ -15,7 +15,7 @@ REM ================================================================
 
 setlocal enabledelayedexpansion
 set FOLD=0
-set REPO=spine_model
+set REPO=..\spine_model
 set LOGFILE=extra_training_%date:~-4,4%%date:~-10,2%%date:~-7,2%_%time:~0,2%%time:~3,2%.log
 
 echo ================================================================
@@ -140,5 +140,5 @@ echo ================================================================
 echo  Extra training complete!  %date% %time%
 echo  Check OOF CSVs:
 echo    dir %REPO%\results\*\oof_fold0.csv
-echo  Next: python find_noisy_label_local.py
+echo  Next: python src/noise_detection.py
 echo ================================================================

@@ -1,53 +1,44 @@
-# ── Python ──────────────────────────────────────
+# Python
 __pycache__/
 *.py[cod]
 *.pyo
 *.egg-info/
 dist/
 build/
-*.egg
 
-# ── Environment ─────────────────────────────────
+# Environment
 .env
 .venv/
 env/
 venv/
 
-# ── IDE / Editor ────────────────────────────────
+# IDE / Editor
 .vscode/
 .idea/
 *.swp
-*.swo
 *~
 .claude/
+CLAUDE.md
 
-# ── OS files ────────────────────────────────────
+# OS
 Thumbs.db
 Desktop.ini
 .DS_Store
 
-# ── Training data & large files ─────────────────
-# The base model repo is cloned separately (see README)
+# Base model repo (cloned separately — see README)
 spine_model/
 
-# Model checkpoints (too large for git)
-checkpoints/*.pth
-checkpoints/*.ckpt
-checkpoints/*.pt
+# Model checkpoints
+checkpoints/
 
-# Data directories
-data/raw/
-data/preprocessed/
-data/external/
+# Data
+data/
 
-# Training outputs (keep dir via .gitkeep)
-outputs/*
-!outputs/.gitkeep
-
-# ── Logs ────────────────────────────────────────
+# Outputs & logs
+outputs/
+logs/
 *.log
 
-# ── Misc ────────────────────────────────────────
+# Misc
 prompt.docx
-*.pyc
 node_modules/

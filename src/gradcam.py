@@ -24,7 +24,7 @@ import cv2
 
 warnings.filterwarnings("ignore")
 
-BASE_DIR = Path(__file__).parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 REPO_DIR = BASE_DIR / "spine_model"
 
 LEVELS = ["L1/L2", "L2/L3", "L3/L4", "L4/L5", "L5/S1"]

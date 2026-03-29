@@ -30,7 +30,7 @@ warnings.simplefilter('ignore')
 pd.set_option('display.max_columns', 500)
 
 # ── Setup paths ──────────────────────────────────────────────────
-BASE_DIR = Path(__file__).parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 REPO_DIR = BASE_DIR / "spine_model"
 os.chdir(str(REPO_DIR))
 

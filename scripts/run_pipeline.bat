@@ -6,8 +6,8 @@ REM ============================================================
 REM
 REM  BEFORE running this script:
 REM   1. conda activate rsna
-REM   2. python setup_check.py   (fix any FAIL items first)
-REM   3. python patch_for_rtx4060.py
+REM   2. python src/setup_check.py   (fix any FAIL items first)
+REM   3. python src/gpu_patch.py
 REM
 REM  Run from SpineSCAN_FYP\ directory:
 REM   cd C:\Users\hamma\Desktop\SpineSCAN_FYP
@@ -28,11 +28,11 @@ setlocal enabledelayedexpansion
 
 REM ── Paths ────────────────────────────────────────────────────
 set "BASE_DIR=%~dp0"
-set "REPO_DIR=%BASE_DIR%spine_model"
+set "REPO_DIR=%BASE_DIR%..\spine_model"
 set "INPUT_DIR=%REPO_DIR%\input"
-set "CHKPT_DIR=%BASE_DIR%checkpoints"
-set "OUT_DIR=%BASE_DIR%outputs"
-set "LOG_DIR=%BASE_DIR%logs"
+set "CHKPT_DIR=%BASE_DIR%..\checkpoints"
+set "OUT_DIR=%BASE_DIR%..\outputs"
+set "LOG_DIR=%BASE_DIR%..\logs"
 
 REM Fold to train (0 = first fold only, saves time on RTX 4060)
 set "FOLD=0"
@@ -61,7 +61,7 @@ if errorlevel 1 (
 REM ── Guard: patch must be applied ─────────────────────────────
 if not exist "%REPO_DIR%\.rtx4060_patch_applied" (
     echo [ERROR] RTX 4060 patch not applied. Run first:
-    echo         python patch_for_rtx4060.py
+    echo         python src/gpu_patch.py
     pause
     exit /b 1
 )
@@ -277,7 +277,7 @@ echo   Log saved to: %LOGFILE%
 echo.
 echo   Next steps:
 echo   1. Review results in: %REPO_DIR%\results\
-echo   2. Run inference:    python inference_single.py --help
+echo   2. Run inference:    python src/inference.py --help
 echo   3. Launch web app:   streamlit run app.py
 echo ============================================================
 pause

@@ -12,7 +12,7 @@ import os
 import subprocess
 from pathlib import Path
 
-BASE_DIR = Path(__file__).parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 REPO_DIR = BASE_DIR / "spine_model"
 INPUT_DIR = REPO_DIR / "input"
 
