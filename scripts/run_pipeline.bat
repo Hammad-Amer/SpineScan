@@ -173,15 +173,15 @@ echo [DONE] STEP 5 complete.
 
 REM =============================================================
 REM  STEP 6: Sagittal YOLO — Region estimation
-REM  Downloads: bartley-coords-rsna-improved-csv dataset
+REM  Downloads: improved coordinate annotations dataset
 REM =============================================================
 echo.
 echo [STEP 6] Sagittal YOLO region estimation...
 
-REM Download external Bartley coordinates if not present
+REM Download improved coordinate annotations if not present
 if not exist "%INPUT_DIR%\bartley-coords-rsna-improved-csv" (
     pushd "%INPUT_DIR%"
-    kaggle datasets download -d yujiariyasu/bartley-coords-rsna-improved-csv
+    kaggle datasets download -d hammadamer/bartley-coords-rsna-improved-csv
     if errorlevel 1 (
         echo [WARN] Could not download Bartley coords — continuing without them.
     ) else (

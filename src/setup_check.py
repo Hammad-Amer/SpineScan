@@ -103,7 +103,7 @@ section("Repository")
 
 check("Repo cloned",
       REPO_DIR.exists(),
-      f"Clone repo:\n  cd {BASE_DIR}\n  git clone https://github.com/yujiariyasu/spine_model.git")
+      f"Clone repo:\n  cd {BASE_DIR}\n  git clone https://github.com/Hammad-Amer/SpineScan-Training-Backend.git spine_model")
 
 if REPO_DIR.exists():
     check("train_one_fold.py present", (REPO_DIR / "train_one_fold.py").exists(), "Repo may be incomplete")
@@ -129,11 +129,11 @@ if INPUT_DIR.exists():
     sag_df      = INPUT_DIR / "sagittal_df.csv"
 
     check("train.csv",                    train_csv.exists(),
-          "Download competition data first")
+          "Download training data first")
     check("train_label_coordinates.csv",  label_csv.exists(),
-          "Download competition data first")
+          "Download training data first")
     check("train_images/ DICOM folder",   train_imgs.exists() and any(train_imgs.iterdir()),
-          "Download and unzip competition DICOMs")
+          "Download and unzip DICOM dataset")
     check("axial_all_images/ (PNGs)",     axial_imgs.exists(),
           "Run: python dcm_to_png.py  (step 3 in pipeline)", warn=True)
     check("sagittal_all_images/ (PNGs)",  sag_imgs.exists(),

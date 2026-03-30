@@ -32,7 +32,7 @@ if not REPO_DIR.exists():
     print(f"{FAIL} Repo not found at {REPO_DIR}")
     print("       Clone it first:")
     print(f"       cd {BASE_DIR}")
-    print("       git clone https://github.com/yujiariyasu/rsna_2024_lumbar_spine_degenerative_classification.git spine_model")
+    print("       git clone https://github.com/Hammad-Amer/SpineScan-Training-Backend.git spine_model")
     sys.exit(1)
 
 if SENTINEL.exists():

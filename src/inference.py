@@ -537,7 +537,7 @@ def format_predictions(predictions, study_id):
     """Convert numpy arrays to JSON-serializable format."""
     output = {
         "study_id": str(study_id),
-        "model": "SpineSCAN (RSNA 2024 2nd Place, RTX4060 adaptation)",
+        "model": "SpineSCAN Multi-Model Ensemble",
         "conditions": {}
     }
 

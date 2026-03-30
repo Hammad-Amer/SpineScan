@@ -39,6 +39,8 @@ outputs/
 logs/
 *.log
 
+# Docs (personal/FYP brief)
+docs/
+
 # Misc
-prompt.docx
 node_modules/

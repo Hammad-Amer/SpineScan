@@ -2,7 +2,7 @@
 
 An end-to-end deep learning system for classifying **25 degenerative conditions** of the lumbar spine from MRI scans, optimised to run on a single consumer-grade GPU (NVIDIA RTX 4060 8 GB).
 
-Built as a Final Year Project, SpineSCAN takes raw DICOM MRI studies and produces severity predictions (Normal/Mild, Moderate, Severe) across 5 pathologies at 5 spinal levels, with Grad-CAM visual explanations to support clinical interpretability.
+SpineSCAN takes raw DICOM MRI studies and produces severity predictions (Normal/Mild, Moderate, Severe) across 5 pathologies at 5 spinal levels, with Grad-CAM visual explanations to support clinical interpretability.
 
 ![Python](https://img.shields.io/badge/Python-3.10-blue)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red)
@@ -135,10 +135,11 @@ conda activate rsna
 pip install -r requirements.txt
 ```
 
-### 3. Clone the base model repository
+### 3. Set up the model training backend
 
 ```bash
-git clone https://github.com/yujiariyasu/rsna_2024_lumbar_spine_degenerative_classification.git spine_model
+# Clone the training backbone into spine_model/
+git clone https://github.com/Hammad-Amer/SpineScan-Training-Backend.git spine_model
 ```
 
 ### 4. Apply GPU optimisation patches
@@ -155,7 +156,7 @@ python src/setup_check.py
 
 ### 6. Prepare data
 
-Place RSNA 2024 competition data into `spine_model/input/`:
+Place the lumbar spine MRI dataset into `spine_model/input/`:
 - `train.csv`, `train_label_coordinates.csv`
 - `train_images/` (DICOM files)
 
@@ -237,17 +238,15 @@ When the configured batch size exceeds the limit, gradient accumulation steps ar
 
 ## Technical Approach
 
-This project builds on the architecture of the [2nd-place solution](https://github.com/yujiariyasu/spine_model) from the RSNA 2024 Lumbar Spine Degenerative Classification competition by Yuji Ariyasu, with significant adaptations:
-
-1. **Single-GPU adaptation** — Replaced multi-GPU distributed training with single-device training, automatic batch size scaling, and gradient accumulation
-2. **Self-contained noise detection** — Developed `find_noisy_label_local.py` to perform ensemble-based noise detection using only our own model predictions, eliminating the dependency on external team outputs
-3. **Dynamic ensemble inference** — Built `inference_single.py` to automatically discover and ensemble all available model checkpoints at inference time
-4. **Clinical interface** — Developed the Streamlit application and Grad-CAM pipeline for interpretable predictions
-5. **MRI type classification** — Added automated MRI sequence detection using MobileNetV3-Small
+1. **Single-GPU Training Pipeline** — Designed for consumer hardware with image-size-aware batch clamping, FP16 mixed precision, and automatic gradient accumulation to fit within 8 GB VRAM
+2. **Multi-Stage Preprocessing** — Automated pipeline covering DICOM-to-PNG conversion, sagittal slice estimation, YOLO-based region detection, and axial/sagittal classification dataset generation
+3. **Noise-Aware Training** — Custom ensemble-based noise detection that identifies mislabelled training samples using model disagreement, followed by clean-label retraining for improved accuracy
+4. **Dynamic Ensemble Inference** — Automatically discovers and ensembles all available model checkpoints at inference time, with graceful degradation when models are missing
+5. **Clinical Interface** — Streamlit application with Grad-CAM heatmap visualisation for interpretable predictions
+6. **MRI Type Classification** — MobileNetV3-Small classifier for automated MRI sequence detection (Sagittal T1, Sagittal T2/STIR, Axial T2)
 
 ---
 
 ## License
 
-This project is for educational purposes as part of a Final Year Project.
-The base model architecture is from the [RSNA 2024 competition](https://www.kaggle.com/competitions/rsna-2024-lumbar-spine-degenerative-classification).
+MIT License. This project was developed as a Final Year Project for automated lumbar spine degenerative classification from MRI.

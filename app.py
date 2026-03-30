@@ -1,8 +1,7 @@
 """
-SpineSCAN FYP — Streamlit Web Application
-==========================================
-Lumbar Spine Degenerative Classification
-Based on RSNA 2024 2nd-Place Solution (Yuji Ariyasu)
+SpineSCAN — Streamlit Web Application
+======================================
+Automated Lumbar Spine Degenerative Classification from MRI
 
 Launch:
     conda activate rsna
@@ -178,9 +177,9 @@ with st.sidebar:
 
     st.markdown("### About")
     st.markdown(
-        "**SpineSCAN** uses the RSNA 2024 Lumbar Spine "
-        "Degenerative Classification 2nd-place solution "
-        "(Yuji Ariyasu) to automatically classify:\n\n"
+        "**SpineSCAN** is an automated system for "
+        "lumbar spine degenerative classification "
+        "from MRI scans. It detects:\n\n"
         "- Spinal Canal Stenosis\n"
         "- Neural Foraminal Narrowing (L/R)\n"
         "- Subarticular Stenosis (L/R)\n\n"
@@ -205,8 +204,7 @@ with st.sidebar:
 # ── Main page ─────────────────────────────────────────────────
 st.markdown('<div class="main-header">SpineSCAN</div>', unsafe_allow_html=True)
 st.markdown(
-    '<div class="sub-header">Lumbar Spine Degenerative Classification '
-    '- RSNA 2024 2nd-Place Solution</div>',
+    '<div class="sub-header">Automated Lumbar Spine Degenerative Classification from MRI</div>',
     unsafe_allow_html=True
 )
 
@@ -562,33 +560,26 @@ with tabs[3]:
     st.markdown('<div class="section-title">Quick Start Guide</div>', unsafe_allow_html=True)
 
     steps = [
-        ("1. Clone the repo",
+        ("1. Clone the training backend",
          "```bash\ncd C:\\Users\\hamma\\Desktop\\SpineSCAN_FYP\n"
-         "git clone https://github.com/yujiariyasu/spine_model.git\n```"),
+         "git clone https://github.com/Hammad-Amer/SpineScan-Training-Backend.git spine_model\n```"),
 
-        ("2. Apply RTX 4060 patch",
-         "```bash\npython patch_for_rtx4060.py\n```\n"
+        ("2. Apply GPU optimisation patch",
+         "```bash\npython src/gpu_patch.py\n```\n"
          "This reduces batch sizes, enables FP16, and fixes Windows paths."),
 
-        ("3. Download competition data",
-         "```bash\n# Place your kaggle.json in ~/.kaggle/\n"
-         "cd spine_model\\input\n"
-         "kaggle competitions download -c rsna-2024-lumbar-spine-degenerative-classification\n"
-         "# Unzip: python -c \"import zipfile; zipfile.ZipFile('rsna-2024-lumbar-spine-degenerative-classification.zip').extractall('.')\"\n```"),
+        ("3. Prepare training data",
+         "```bash\n# Place MRI DICOM dataset into spine_model/input/\n"
+         "# Required: train.csv, train_label_coordinates.csv, train_images/\n```"),
 
-        ("4. Run axial level estimation (Kaggle kernel)",
-         "```bash\n# Run this from kaggle.com/code/yujiariyasu/axial-level-estimation\n"
-         "# Then download output:\n"
-         "kaggle kernels output yujiariyasu/axial-level-estimation -p ./input/\n```"),
+        ("4. Check environment",
+         "```bash\npython src/setup_check.py\n```"),
 
-        ("5. Check environment",
-         "```bash\npython setup_check.py\n```"),
-
-        ("6. Run full pipeline",
-         "```batch\nrun_pipeline.bat\n```\n"
+        ("5. Run full pipeline",
+         "```batch\nscripts\\run_pipeline.bat\n```\n"
          "Estimated ~24-40 hours on RTX 4060 (leave running overnight)."),
 
-        ("7. Launch web app",
+        ("6. Launch web app",
          "```bash\nstreamlit run app.py\n```"),
     ]
 
